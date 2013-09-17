@@ -12,6 +12,7 @@ fn send_command_to_redis(mut redis: net::tcp::TcpStream, command: &[u8]) -> ~str
     let buf: &mut [u8] = [0];
     let mut response : ~[u8] = ~[];
 
+    // 13 is \r
     while(buf[0] != 13) {
         match redis.read(buf) {
             Some(_i) => {
@@ -20,6 +21,8 @@ fn send_command_to_redis(mut redis: net::tcp::TcpStream, command: &[u8]) -> ~str
             None => println("Couldn't read off of the socket.")
         }
     }
+    // read off the \n
+    redis.read(buf);
 
     str::from_utf8(response)
 }
