@@ -6,15 +6,6 @@ use std::io::println;
 
 use std::str;
 
-// TODO: These types are all wron, but they are all the types
-enum Reply {
-    Status(~str),
-    Error(~str),
-    Integer(int),
-    Bulk(~str),
-    MultiBulk(~str),
-}
-
 fn send_command_to_redis(mut redis: net::tcp::TcpStream, command: &[u8]) -> ~str{
     redis.write(command);
 
